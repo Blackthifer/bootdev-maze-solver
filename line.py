@@ -4,4 +4,4 @@ class Line:
         self.b = p2
 
     def draw(self, canvas, color):
-        canvas.create_line(self.a.x, self.a.y, self.b.x, self.b.y, fill = color, width = 2)
+        canvas.create_line(self.a.x, self.a.y, self.b.x, self.b.y, fill=color, width=2)
