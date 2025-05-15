@@ -12,8 +12,8 @@ class Window:
     def draw_line(self, line, color):
         line.draw(self.canvas, color)
     
-    def draw_cell(self, cell, x1, y1, x2, y2, color):
-        cell.draw(self.canvas, x1, y1, x2, y2, color)
+    def draw_cell(self, cell, color):
+        cell.draw(self.canvas, color)
     
     def redraw(self):
         self.root.update()

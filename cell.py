@@ -1,16 +1,18 @@
 class Cell:
-    def __init__(self, left, right, top, bottom):
-        self.hasleftwall = left
-        self.hasrightwall = right
-        self.hastopwall = top
-        self.hasbottomwall = bottom
+    def __init__(self, walls, topleft, bottomright):
+        self.hasleftwall = walls[0]
+        self.hastopwall = walls[1]
+        self.hasrightwall = walls[2]
+        self.hasbottomwall = walls[3]
+        self.tl = topleft
+        self.br = bottomright
 
-    def draw(self, canvas, top, left, bottom, right, color):
+    def draw(self, canvas, color):
         if self.hasleftwall:
-            canvas.create_line(left, top, left, bottom, fill=color, width=2)
+            canvas.create_line(self.tl.x, self.tl.y, self.tl.x, self.br.y, fill=color, width=2)
         if self.hasrightwall:
-            canvas.create_line(right, top, right, bottom, fill=color, width=2)
+            canvas.create_line(self.br.x, self.tl.y, self.br.x, self.br.y, fill=color, width=2)
         if self.hastopwall:
-            canvas.create_line(left, top, right, top, fill=color, width=2)
+            canvas.create_line(self.tl.x, self.tl.y, self.br.x, self.tl.y, fill=color, width=2)
         if self.hasbottomwall:
-            canvas.create_line(left, bottom, right, bottom, fill=color, width=2)
+            canvas.create_line(self.tl.x, self.br.y, self.br.x, self.br.y, fill=color, width=2)
