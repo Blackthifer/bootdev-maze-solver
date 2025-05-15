@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+import time
 
 class Window:
     def __init__(self, width, height):
@@ -21,6 +22,14 @@ class Window:
     def redraw(self):
         self.root.update()
         self.root.update_idletasks()
+
+    def animate_maze(self, maze):
+        for i in range(maze.rows):
+            for j in range(maze.cols):
+                maze.draw_cell(self.canvas, i, j)
+                self.redraw()
+                time.sleep(0.01)
+        
 
     def wait_for_close(self):
         self.running = True
