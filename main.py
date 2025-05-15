@@ -27,6 +27,8 @@ def main():
         ]
     for cell in cells:
         win.draw_cell(cell, "black")
+    for i in range(len(cells) - 1):
+        win.connect_cells(cells[i], cells[i + 1], i % 2 == 0)
     win.wait_for_close()
 
 main()

@@ -15,6 +15,9 @@ class Window:
     def draw_cell(self, cell, color):
         cell.draw(self.canvas, color)
     
+    def connect_cells(self, cell1, cell2, undo=False):
+        cell1.draw_move(self.canvas, cell2, undo)
+    
     def redraw(self):
         self.root.update()
         self.root.update_idletasks()
