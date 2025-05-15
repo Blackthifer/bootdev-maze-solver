@@ -8,6 +8,9 @@ class Window:
         self.canvas = Canvas(self.root, {"width": width, "height": height})
         self.canvas.pack()
         self.running = False
+
+    def draw_line(self, line, color):
+        line.draw(self.canvas, color)
     
     def redraw(self):
         self.root.update()
