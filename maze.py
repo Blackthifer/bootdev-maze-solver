@@ -28,39 +28,49 @@ class Maze:
             self.cells.append(row)
     
     def choose_entrance_and_exit(self, canvas):
-        self.entry = Point(0, 0)
-        self.draw_cell(canvas, 0, 0)
-        self.exit = Point(self.rows - 1, self.cols - 1)
-        self.draw_cell(canvas, self.rows - 1, self.cols - 1)
+        entry_x = rand.randint(0, self.rows - 1)
+        entry_y = rand.randint(0, self.cols - 1)
+        exit_x = entry_x
+        exit_y = entry_y
+        while entry_x == exit_x and entry_y == exit_y:
+            exit_x = rand.randint(0, self.rows - 1)
+            exit_y = rand.randint(0, self.cols - 1)
+        self.entry = Point(entry_x, entry_y)
+        self.draw_cell(canvas, entry_x, entry_y)
+        self.exit = Point(exit_x, exit_y)
+        self.draw_cell(canvas, exit_x, exit_y)
     
-    def break_walls(self, row, col, window):
+    def break_walls(self, window, row = -1, col = -1):
         if not self.entry and not self.exit:
             self.choose_entrance_and_exit(window.canvas)
+        if row == -1 and col == -1:
+            row = self.entry.x
+            col = self.entry.y
         self.draw_cell(window.canvas, row, col)
         self.cells[row][col].visited = True
         window.animate()
-        breakable = self.get_breakable_walls(row, col)
+        breakable = self.get_breakable_walls(row, col) if not self.is_exit(row, col) else []
         while len(breakable) > 0:
             to_break = rand.choice(breakable)
             match to_break:
                 case "left":
                     self.cells[row][col].hasleftwall = False
                     self.cells[row][col - 1].hasrightwall = False
-                    self.break_walls(row, col - 1, window)
+                    self.break_walls(window, row, col - 1)
                 case "top":
                     self.cells[row][col].hastopwall = False
                     self.cells[row - 1][col].hasbottomwall = False
-                    self.break_walls(row - 1, col, window)
+                    self.break_walls(window, row - 1, col)
                 case "right":
                     self.cells[row][col].hasrightwall = False
                     self.cells[row][col + 1].hasleftwall = False
-                    self.break_walls(row, col + 1, window)
+                    self.break_walls(window, row, col + 1)
                 case "bottom":
                     self.cells[row][col].hasbottomwall = False
                     self.cells[row + 1][col].hastopwall = False
-                    self.break_walls(row + 1, col, window)
-            breakable = self.get_breakable_walls(row, col)
-        if row == 0 and col == 0:
+                    self.break_walls(window, row + 1, col)
+            breakable = self.get_breakable_walls(row, col) if not self.is_entry(row, col) else []
+        if self.is_entry(row, col):
             self.draw_endpoints(window.canvas)
             window.animate()
     
@@ -85,9 +95,8 @@ class Maze:
         window.animate()
         if row < 0 and col < 0 and not self.entry:
             return False
-        if row == -1:
+        if row == -1 and col == -1:
             row = self.entry.x
-        if col == -1:
             col = self.entry.y
         if self.is_exit(row, col):
             return True

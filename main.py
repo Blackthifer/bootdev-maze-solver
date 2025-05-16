@@ -6,12 +6,12 @@ from maze import Maze
 
 def main():
     win = Window(800, 600)
-    win.delay = 0.005
-    maze = Maze(Point(20, 20), Point(20, 20), 28, 38)
+    win.delay = 0.003
+    maze = Maze(Point(10, 10), Point(20, 20), 29, 39)
     win.animate_maze(maze)
-    maze.break_walls(0, 0, win)
+    maze.break_walls(win)
     maze.reset_visited()
-    if maze.solve(win, 0, 0):
+    if maze.solve(win):
         print("Congratulations! Maze Solved! :D")
     else:
         print("No solutions found... :C")
