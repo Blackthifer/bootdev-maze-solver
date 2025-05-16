@@ -10,16 +10,13 @@ class Cell:
         self.left = topleft.x
         self.bottom = bottomright.y
         self.right = bottomright.x
+        self.visited = False
 
     def draw(self, canvas, color):
-        if self.hasleftwall:
-            canvas.create_line(self.left, self.top, self.left, self.bottom, fill=color, width=2)
-        if self.hasrightwall:
-            canvas.create_line(self.right, self.top, self.right, self.bottom, fill=color, width=2)
-        if self.hastopwall:
-            canvas.create_line(self.left, self.top, self.right, self.top, fill=color, width=2)
-        if self.hasbottomwall:
-            canvas.create_line(self.left, self.bottom, self.right, self.bottom, fill=color, width=2)
+        canvas.create_line(self.left, self.top, self.left, self.bottom, fill=color if self.hasleftwall else "#d9d9d9", width=2)
+        canvas.create_line(self.right, self.top, self.right, self.bottom, fill=color if self.hasrightwall else "#d9d9d9", width=2)
+        canvas.create_line(self.left, self.top, self.right, self.top, fill=color if self.hastopwall else "#d9d9d9", width=2)
+        canvas.create_line(self.left, self.bottom, self.right, self.bottom, fill=color if self.hasbottomwall else "#d9d9d9", width=2)
     
     def draw_move(self, canvas, other, undo = False):
         self_center = Point((self.left + self.right) // 2, (self.top + self.bottom) // 2)

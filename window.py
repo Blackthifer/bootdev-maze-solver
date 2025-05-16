@@ -29,8 +29,9 @@ class Window:
                 maze.draw_cell(self.canvas, i, j)
                 self.redraw()
                 time.sleep(0.01)
-        
-
+        maze.draw_endpoints(self.canvas)
+        self.redraw()
+    
     def wait_for_close(self):
         self.running = True
         while self.running:
