@@ -9,6 +9,7 @@ class Window:
         self.canvas = Canvas(self.root, {"width": width, "height": height})
         self.canvas.pack()
         self.running = False
+        self.delay = 0.05
 
     def draw_line(self, line, color):
         line.draw(self.canvas, color)
@@ -27,10 +28,11 @@ class Window:
         for i in range(maze.rows):
             for j in range(maze.cols):
                 maze.draw_cell(self.canvas, i, j)
-                self.redraw()
-                time.sleep(0.01)
-        maze.draw_endpoints(self.canvas)
+                self.animate()
+
+    def animate(self):
         self.redraw()
+        time.sleep(self.delay)
     
     def wait_for_close(self):
         self.running = True
